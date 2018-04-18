@@ -38,4 +38,17 @@ describe('Mongoose API', () => {
             });
     });
 
+    const roundTrip = doc => JSON.parse(JSON.stringify(doc.toJSON()));
+
+    it('gets a mongoose by ID', () => {
+        return Mongoose.create(meerkat).then(roundTrip)
+            .then(saved => {
+                meerkat = saved;
+                return request.get(`/mongeese/${meerkat._id}`);
+            })
+            .then(({ body }) => {
+                assert.deepEqual(body, meerkat);
+            });
+    });
+
 });
