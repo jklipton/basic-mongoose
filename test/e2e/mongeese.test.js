@@ -26,10 +26,10 @@ describe('Mongoose API', () => {
         continent: 'Africa',
         sizeCm: 50,
         weightKg: 2.5,
-        facts: ['each meerkats stripes are unique', 'meerkats sometimes share their burrow with squirrels']
+        facts: ['each meerkats stripes are unique']
     };
 
-    it('saves a mongoose', () => {
+    it('saves and gets mongoose', () => {
         return request.post('/mongeese')
             .send(indian)
             .then(({ body }) => {
@@ -48,6 +48,20 @@ describe('Mongoose API', () => {
             })
             .then(({ body }) => {
                 assert.deepEqual(body, meerkat);
+            });
+    });
+
+    it('updates a mongoose', () => {
+        meerkat.facts[1] = 'meerkats sometimes share their burrow with squirrels';
+
+        return request.put(`/mongeese/${meerkat._id}`)
+            .send(meerkat)
+            .then(({ body }) => {
+                assert.deepEqual(body, meerkat);
+                return Mongoose.findById(meerkat._id).then(roundTrip);
+            })
+            .then(updated => {
+                assert.deepEqual(updated, meerkat);
             });
     });
 
