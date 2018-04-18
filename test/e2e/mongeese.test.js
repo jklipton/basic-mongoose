@@ -65,4 +65,14 @@ describe('Mongoose API', () => {
             });
     });
 
+    it('deletes a mongoose :(', () => {
+        return request.delete(`/mongeese/${meerkat._id}`)
+            .then(() => {
+                return Mongoose.findById(meerkat._id);
+            })
+            .then(found => {
+                assert.isNull(found);
+            });
+    });
+
 });
