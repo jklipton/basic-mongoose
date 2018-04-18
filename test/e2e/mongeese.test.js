@@ -33,7 +33,7 @@ describe('Mongoose API', () => {
         return request.post('/mongeese')
             .send(indian)
             .then(({ body }) => {
-                assert.deepEqual(body, join(body, indian));
+                assert.deepInclude(body, indian);
                 indian = body;
             });
     });
