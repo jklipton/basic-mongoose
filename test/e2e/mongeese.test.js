@@ -75,4 +75,11 @@ describe('Mongoose API', () => {
             });
     });
 
+    it('returns 404 on get of non-existent id', () => {
+        return request.get(`/mongeese/${meerkat._id}`)
+            .then(response => {
+                assert.equal(response.status, 404);
+            });
+    });
+
 });
