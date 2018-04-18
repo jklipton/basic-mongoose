@@ -46,7 +46,7 @@ describe('Mongoose model', () => {
             weightKg: 15
         });
         const { errors } = fat.validateSync();
-        assert.equal(errors['sizeCm'].kind, 'type');
+        assert.equal(errors['sizeCm'].kind, 'Number');
         assert.equal(errors['weightKg'].kind, 'max');
     });
 
